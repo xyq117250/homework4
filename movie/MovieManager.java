@@ -23,8 +23,19 @@ public class MovieManager {
 	String readAllMoviesSql = "SELECT * FROM MOVIE;";
 	String updateMovieSql = "UPDATE MOVIE SET TITLE=? AND POSTERIMAGE=? AND RELEASEDATE=? WHERE ID=?;";
 	String deleteMovieSql = "DELETE FROM MOVIE WHERE ID=?";
-
-
+	DataSource ds;
+	
+	public MovieManager() {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+   //void createMovie(Movie newMovie);
 	public void createMovie(Movie newMovie) {
 		try {
 			connection = ds.getConnection();
@@ -47,7 +58,7 @@ public class MovieManager {
 			}
 		}
 	}
-
+   //List<Movie> readAllMovies();
 	public List<Movie> readAllMovies() {
 		List<Movie> movies = new ArrayList<Movie>();
 		try {
@@ -76,12 +87,13 @@ public class MovieManager {
 		}
 		return movies;
 	}
-
-	public Movie readMovie(String id) {
+	
+    //Movie readMovie(String movieId); By movie Id
+	public Movie readMovie(String movieId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(readMovie);
-			statement.setString(1, id);
+			statement.setString(1, movieId);
 			results = statement.executeQuery();
 			if(results.next()) {
 				Movie movie =new Movie();
@@ -104,13 +116,13 @@ public class MovieManager {
 		}
 		return null;
 	}
-
-	public void updateMovie(String id, Movie movie) {
+  //void updateMovie(String movieId, Movie movie);
+	public void updateMovie(String movieId, Movie movie) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(updateMovieSql);
 			statement.setString(1, movie.getTitle());
-			statement.setString(2, id);
+			statement.setString(2, movieId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -124,11 +136,13 @@ public class MovieManager {
 			}
 		}
 	}
-	public void deleteMovie(String id) {
+	
+	//void deleteMovie(String movieId);
+	public void deleteMovie(String movieId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(deleteMovieSql);
-			statement.setString(1, id);
+			statement.setString(1, movieId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -143,14 +157,5 @@ public class MovieManager {
 		}
 	}
 
-	DataSource ds;
-	public MovieManager() {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 }

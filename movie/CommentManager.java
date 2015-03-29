@@ -24,8 +24,8 @@ public class CommentManager {
 	String readCommentForIdSql = "SELECT COMMENT.COMMENT FROM COMMENT WHERE ID=?;";
 	String updateCommentSql = "UPDATE COMMENT SET COMMENT=? WHERE ID=?;";
 	String deleteCommentSql = "DELETE FROM COMMENT WHERE ID=?;";
-	
 	DataSource ds;
+	
 	public CommentManager() {
 		try {
 			Context ctx = new InitialContext();
@@ -51,7 +51,9 @@ public class CommentManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		} 
+		// close SQL connection
+		finally {
 			try {
 				connection.close();
 			} catch (SQLException e) {
@@ -94,7 +96,7 @@ public class CommentManager {
 
 	//List<Comment> readAllCommentsForUsername
 	public List<Comment> readAllCommentsForUsername(String username) {
-		List<Comment> comments = new ArrayList<Comment>();
+		List<Comment> commentlist = new ArrayList<Comment>();
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(readAllCommentsForUsernameSql);
@@ -107,7 +109,7 @@ public class CommentManager {
 				comment.setMovieId(results.getString("movieId"));
 				comment.setComment(results.getString("comment"));
 				comment.setDate(results.getDate("date"));
-				comments.add(comment);//add comment to the list
+				commentlist.add(comment);//add comment to the list
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -120,7 +122,7 @@ public class CommentManager {
 				e.printStackTrace();
 			}
 		}
-		return comments;//return the list of comments
+		return commentlist;//return the list
 	}
 
 	//List<Comment> readAllCommentsForMovie(String movieId);
@@ -155,11 +157,11 @@ public class CommentManager {
 	}	
 
 	//Comment readCommentForId(String commentId);
-	public Comment readCommentForId(String id) {
+	public Comment readCommentForId(String commentId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(readCommentForIdSql);
-			statement.setString(1, id);
+			statement.setString(1, commentId);
 			results = statement.executeQuery();
 			if(results.next()) {
 				Comment comment = new Comment();
@@ -206,11 +208,11 @@ public class CommentManager {
 	}
 	
 	//void deleteComment(String commentId);
-	public void deleteComment(String id) {
+	public void deleteComment(String commentId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(deleteCommentSql);
-			statement.setString(1, id);
+			statement.setString(1, commentId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

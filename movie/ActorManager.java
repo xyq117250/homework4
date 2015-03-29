@@ -24,8 +24,19 @@ public class ActorManager {
 		String readAllActorsSql = "SELECT * FROM ACTOR;";
 		String updateActorSql = "UPDATE ACTOR SET FIRSTNAME=? AND LASTNAME=? AND DATEOFBIRTH=? WHERE ID=?;";
 		String deleteActorSql = "DELETE FROM ACTOR WHERE ID=?";
-
-    //create a actor
+		DataSource ds;
+		
+		public ActorManager() {
+			try {
+				Context ctx = new InitialContext();
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+    //void createActor(Actor newActor)
 		public void createActor(Actor newActor) {
 			try {
 				connection = ds.getConnection();
@@ -39,7 +50,9 @@ public class ActorManager {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			} 
+			// close SQL connection
+			finally {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -48,7 +61,7 @@ public class ActorManager {
 				}
 			}
 		}
-
+   //List<Actor> readAllActors();
 		public List<Actor> readAllActors() {
 			List<Actor> actorlist = new ArrayList<Actor>();
 			try {
@@ -67,7 +80,9 @@ public class ActorManager {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			} 
+			// close SQL connection
+			finally {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -77,13 +92,13 @@ public class ActorManager {
 			}
 			return actorlist;
 		}
-
-		public Actor readActor(String id) {
+	  //Actor readActor(String actorId);
+		public Actor readActor(String actorid) {
 			Actor actor = new Actor();
 			try {
 				connection = ds.getConnection();
 				statement = connection.prepareStatement(readActorSql);
-				statement.setString(1, id);
+				statement.setString(1, actorid);
 				results = statement.executeQuery();
 				
 				if(results.next()) {
@@ -97,7 +112,9 @@ public class ActorManager {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			}
+			// close SQL connection
+			finally {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -107,20 +124,22 @@ public class ActorManager {
 			}
 			return actor;
 		}
-
-		public void updateActor(String id, Actor actor) {
+     //void updateActor(String actorId, Actor actor);
+		public void updateActor(String actorId, Actor actor) {
 			try {
 				connection = ds.getConnection();
 				statement = connection.prepareStatement(updateActorSql);
 				statement.setString(1, actor.getFirstName());
 				statement.setString(2, actor.getLastName());
 				statement.setDate(3, actor.getDateOfBirth());
-				statement.setString(4, id);
+				statement.setString(4, actorId);
 				statement.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			}
+			// close SQL connection
+			finally {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -129,16 +148,20 @@ public class ActorManager {
 				}
 			}
 		}
-		public void deleteActor(String id) {
+		
+		//void deleteActor(String actorId);
+		public void deleteActor(String actorId) {
 			try {
 				connection = ds.getConnection();
 				statement = connection.prepareStatement(deleteActorSql);
-				statement.setString(1, id);
+				statement.setString(1, actorId);
 				statement.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			}
+			// close SQL connection
+			finally {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -147,14 +170,6 @@ public class ActorManager {
 				}
 			}
 		}
-		DataSource ds;
-		public ActorManager() {
-			try {
-				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
-			} catch (NamingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
+		
 	}

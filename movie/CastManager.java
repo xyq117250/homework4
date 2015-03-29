@@ -40,14 +40,14 @@ public class CastManager {
 	}
 
 	//void createCast(Cast cast);
-	public void createCast(Cast newCast) {
+	public void createCast(Cast Cast) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(createCastSql);
-			statement.setString(1, newCast.getId());
-			statement.setString(2, newCast.getMovieId());
-			statement.setString(3, newCast.getActorId());
-			statement.setString(4, newCast.getCharacterName());
+			statement.setString(1, Cast.getId());
+			statement.setString(2, Cast.getMovieId());
+			statement.setString(3, Cast.getActorId());
+			statement.setString(4, Cast.getCharacterName());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -153,11 +153,11 @@ public class CastManager {
 	}	
 
 	//Cast readCastForId(String castId);
-	public Cast readCastForId(String id) {
+	public Cast readCastForId(String castId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(readCastForIdSql);
-			statement.setString(1, id);
+			statement.setString(1, castId);
 			results = statement.executeQuery();
 			if(results.next()) {
 				Cast cast = new Cast();
@@ -182,11 +182,11 @@ public class CastManager {
 	}
 
 	//void updateCast(String castId, Cast cast);
-	public void updateCast(String id, Cast newCast) {
+	public void updateCast(String id, Cast Cast) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(updateCastSql);
-			statement.setString(1, newCast.getCharacterName());
+			statement.setString(1, Cast.getCharacterName());
 			statement.setString(2, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -203,11 +203,11 @@ public class CastManager {
 	}
 	
 	//void deleteCast(String castId);
-	public void deleteCast(String id) {
+	public void deleteCast(String castId) {
 		try {
 			connection = ds.getConnection();
 			statement = connection.prepareStatement(deleteCastSql);
-			statement.setString(1, id);
+			statement.setString(1, castId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

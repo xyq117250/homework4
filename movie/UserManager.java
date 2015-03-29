@@ -19,8 +19,18 @@ public class UserManager {
 	String readAllUsersSql = "SELECT * FROM USER;";
 	String updateUserSql = "UPDATE USER SET PASSWORD=? AND FIRSTNAME=? AND LASTNAME=? AND EMAIL=? AND DATEOFBIRTH=? WHERE USERNAME=?;";
 	String deleteUserSql = "DELETE FROM USER WHERE USERNAME=?";
-
-
+	DataSource ds;
+	
+	public UserManager() {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		 }
+	}
+  //void createUser(User newUser);
 	public void createUser(User newUser) {
 		try {
 			connection = ds.getConnection();
@@ -45,7 +55,7 @@ public class UserManager {
 			}
 		}
 	}
-
+  //List<User> readAllUsers();
 	public List<User> readAllUsers() {
 		List<User> users = new ArrayList<User>();
 		try {
@@ -77,6 +87,7 @@ public class UserManager {
 		return users;
 	}
 
+	//User readUser(String username);
 	public User readUser(String username) {
 		try {
 			connection = ds.getConnection();
@@ -106,7 +117,8 @@ public class UserManager {
 		}
 		return null;
 	}
-
+ 
+	//void updateUser(String username, User user);
 	public void updateUser(String username, User user) {
 		try {
 			connection = ds.getConnection();
@@ -126,6 +138,8 @@ public class UserManager {
 			}
 		}
 	}
+	
+	//void deleteUser(String username);
 	public void deleteUser(String username) {
 		try {
 			connection = ds.getConnection();
@@ -141,18 +155,10 @@ public class UserManager {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			 }
 		}
 	}
-	DataSource ds;
-	public UserManager() {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/movie");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
+
 	}
 
