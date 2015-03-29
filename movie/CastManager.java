@@ -27,8 +27,8 @@ public class CastManager {
 	String readCastForIdSql = "SELECT CAST.* FROM CAST WHERE ID=?;";
 	String updateCastSql = "UPDATE CAST SET CHARACTERNAME=? WHERE ID=?;";
 	String deleteCastSql = "DELETE FROM CAST WHERE ID=?;";
-	
 	DataSource ds;
+	
 	public CastManager() {
 		try {
 			Context jndi = new InitialContext();

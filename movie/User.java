@@ -9,7 +9,6 @@ public class User {
 	protected String lastName;
 	protected String email;
 	protected Date dateOfBirth;
-	
 	public User() {}
 	
 	public User(String username, String password, String firstName,String lastName,String email,Date dateOfBirth ) {

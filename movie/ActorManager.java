@@ -124,6 +124,7 @@ public class ActorManager {
 			}
 			return actor;
 		}
+		
      //void updateActor(String actorId, Actor actor);
 		public void updateActor(String actorId, Actor actor) {
 			try {

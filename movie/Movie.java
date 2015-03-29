@@ -8,6 +8,7 @@ public class Movie {
 	protected String posterImage;
 	protected Date releaseDate;
 	public Movie() {}
+	
 	public Movie(String id, String title, String posterImage,Date releaseDate) {
 		super();
 		

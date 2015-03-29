@@ -8,7 +8,9 @@ public class Comment {
 	protected String movieId;
 	protected String comment;
 	protected Date date;
+	
 	public Comment() {}
+	
 	public Comment(String id, String userName, String movieId, String comment, Date date) 
 	{
 		super(); //super is used to invoke user constructor

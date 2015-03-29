@@ -10,10 +10,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class UserManager {
+	
 	Connection connection = null;
 	PreparedStatement statement = null;
 	ResultSet results = null;
-
 	String createUserSql = "INSERT INTO USER (USERNAME, PASSWORD,FIRSTNAME,LASTNAME,EMAIL,DATEOFBIRTH) VALUES (?, ?, ?, ?, ?, ?);";
 	String readUser = "SELECT * FROM USER WHERE USERNAME=?;";
 	String readAllUsersSql = "SELECT * FROM USER;";

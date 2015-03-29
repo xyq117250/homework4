@@ -17,7 +17,6 @@ public class MovieManager {
 	Connection connection = null;
 	PreparedStatement statement = null;
 	ResultSet results = null;
-
 	String createMovieSql = "INSERT INTO MOVIE (ID, TITLE,POSTERIMAGE,RELEASEDATE) VALUES (?, ?, ?, ?);";
 	String readMovie = "SELECT * FROM MOVIE WHERE ID=?;";
 	String readAllMoviesSql = "SELECT * FROM MOVIE;";

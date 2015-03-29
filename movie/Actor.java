@@ -8,6 +8,7 @@ public class Actor {
 	protected String lastName;
 	protected Date dateOfBirth;
 	public Actor() {}
+	
 	public Actor(String id, String firstName, String lastName,Date dateOfBirth) {
 		   super();
 		   this.id = id;
